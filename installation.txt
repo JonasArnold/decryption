@@ -1,0 +1,24 @@
+Installation of Decryption
+-------------------------
+
+Please read through this file before utilising any of the other files in this folder.
+
+1. Un-ZIP the Archive
+2. Start the Installation by executing the file "Decryption_install.bat"
+
+
+
+Uninstall Decryption
+--------------------
+
+1. Un-ZIP the Archive
+2. Start the Uninstallation by executing the file "Decryption_uninstall.bat"
+
+Copyright © 2016 by Jonas Arnold - All rights reserved.
+
+All rights reserved. No part of this publication may be reproduced, distributed, 
+or transmitted in any form or by any means, including copying, alternate,
+or other methods, without the prior written permission of the publisher, 
+except in the case of brief quotations embodied in critical reviews and certain other 
+noncommercial uses permitted by copyright law. For permission requests, write to the 
+publisher, addressed “Attention: Permissions Coordinator,” at the address below.
