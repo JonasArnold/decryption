@@ -2,7 +2,6 @@
 Decryption is a Software that can encrypt and decrypt some text into/from a picture.
 
 ## Installation on your PC
------------------------
 
 1.  Download the decryption software via this git.
 2.  Un-Zip the File.
@@ -10,7 +9,6 @@ Decryption is a Software that can encrypt and decrypt some text into/from a pict
 
 
 ## Usage of DECRYPTION
--------------------
 
 If you want to decrypt a file:
 
