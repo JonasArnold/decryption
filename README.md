@@ -1,5 +1,5 @@
 # decryption
-Decryption is a Software that can encrypt and decrypt some text into a picture.
+Decryption is a Software that can encrypt and decrypt some text into/from a picture.
 
 Installation on your PC
 -----------------------
