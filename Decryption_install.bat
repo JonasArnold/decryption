@@ -68,8 +68,8 @@ echo Finished Copy Process!
 
 echo.
 echo Adding RMB Tools
-SET KEYENTSCHL=HKCR\*\shell\DECRYPTION (Entschluesseln)
-SET KEYVERSCHL=HKCR\*\shell\DECRYPTION (Verschluesseln)
+SET KEYENTSCHL=HKCR\*\shell\DECRYPTION (Decrypt)
+SET KEYVERSCHL=HKCR\*\shell\DECRYPTION (Encrypt)
 
 SET PATHENTSCHL=C:\Decryption\scripts\start_Entschluesselung.bat
 SET PATHVERSCHL=C:\Decryption\scripts\start_Verschluesselung.bat

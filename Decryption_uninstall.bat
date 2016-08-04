@@ -60,8 +60,8 @@ echo Finished Removing Files
 
 echo.
 echo Removing RMB Tools
-SET KEYENTSCHL="HKCR\*\shell\DECRYPTION (Entschluesseln)"
-SET KEYVERSCHL="HKCR\*\shell\DECRYPTION (Verschluesseln)"
+SET KEYENTSCHL="HKCR\*\shell\DECRYPTION (Decrypt)"
+SET KEYVERSCHL="HKCR\*\shell\DECRYPTION (Encrypt)"
 reg delete %KEYENTSCHL% /f
 reg delete %KEYVERSCHL% /f
 echo Finished Removing RMB Tools
