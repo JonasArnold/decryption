@@ -142,6 +142,7 @@ char *argv[];
 		strcat(SaveFileName, ENCRYPTED_ADD);
 		strcat(SaveFileName, argv[DATEIENDUNG]);
 		 	 
+		printf("Encryption processing...");
 		encrypt(LoadFileName, SaveFileName, VerschluesselungFileName);
 			 
 		
