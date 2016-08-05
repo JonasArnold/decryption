@@ -5,9 +5,11 @@ SET Pfad=%1
 SET Dateiendung=%~x1
 
 REM Starting the Encryption (Detecting the Filetype)
-if %Dateiendung% == .BMP (goto GOOD_FILETYPE) Else goto REQ2
-:REQ2
-if %Dateiendung% == .TXT (goto GOOD_FILETYPE) Else goto BAD_FILETYPE
+if %Dateiendung% == .BMP (goto GOOD_FILETYPE)
+if %Dateiendung% == .bmp (goto GOOD_FILETYPE)
+
+if %Dateiendung% == .TXT (goto GOOD_FILETYPE)
+if %Dateiendung% == .txt (goto GOOD_FILETYPE) Else goto BAD_FILETYPE
 
 :GOOD_FILETYPE
 start /min C:\Decryption\intelligence\Verschluesselung.exe %Dateiname% %Pfad% %Dateiendung%
