@@ -12,7 +12,7 @@ if %Dateiendung% == .TXT (goto GOOD_FILETYPE)
 if %Dateiendung% == .txt (goto GOOD_FILETYPE) Else goto BAD_FILETYPE
 
 :GOOD_FILETYPE
-start /min C:\Decryption\intelligence\Verschluesselung.exe %Dateiname% %Pfad% %Dateiendung%
+start C:\Decryption\intelligence\Verschluesselung.exe %Dateiname% %Pfad% %Dateiendung%
 goto END
 
 :BAD_FILETYPE
