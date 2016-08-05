@@ -1,7 +1,7 @@
 REM Detecting the Parameters
 
 SET Dateiname=%~n1
-SET Pfad=%1
+SET Pfad=%~dp1
 SET Dateiendung=%~x1
 
 REM Starting the Encryption (Detecting the Filetype)
