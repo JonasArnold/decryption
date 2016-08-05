@@ -55,11 +55,16 @@
 #define ERROR_OPEN_VERSCHL_FILE				31		/* Passwort-File kann nicht geschr. wertden */
 #define NO_ERROR               0  /* Kein Fehler vorhanden */
 
-#define NAMENSGROESSE  80         /* Namensgroesse für Fileangabe */
+#define NAMENSGROESSE  120         /* Namensgroesse für Fileangabe */
 
 #define CHECK_BIT(var,pos) ((var) & (1<<(pos)))
-#define CLEAR_BIT(var,pos) ((var) &= ~(1 << pos));
-#define SET_BIT(var,pos) ((var) |= (1 << pos));
+#define CLEAR_BIT(var,pos) ((var) &= ~(1 << pos))
+#define SET_BIT(var,pos) ((var) |= (1 << pos))
+
+/* Parameteruebergabe Definition */
+#define DATEINAME 1
+#define PFAD 2
+#define DATEIENDUNG 3
 
 typedef unsigned char byte;
 
@@ -93,18 +98,14 @@ char *argv[];
   char Verschluesselungstext[1500] = {0};    /* Variable fuer Verschluesselungstext */
   char Taste;
     
-        while (--argc)
-        if (**++argv != '-')
-            printf("Dateipfad: %s\n", *argv);
-    
-  /* Intro */ 
-  puts("Verschluesselung mit Bild");
-  puts("-------------------------\n");
-  
 
-	 puts("Bitte lege den Verschluesselungstext (.TXT-Datei) im Ordner des");
-	 puts("Bildes (BMP) ab und gib hier den Dateinamen ohne Endung ein:")
-	 puts("(Oder druecke Enter und gib  manuell einen Verschluesselungstext ein.)");
+  
+  /* Verschluesselung eines Bildes angefordert */
+  puts("Encryption with Picture");
+  puts("-----------------------\n");
+
+	 puts("Please drag and drop your TXT-file with the text into this command");
+	 puts("window. If you want to type some text you can just press ENTER.\n\n");
 		  
 		scanf("%s", &Verschluesselung);
  
@@ -112,13 +113,12 @@ char *argv[];
 		{
 			/* Verschluesslungstext file erstellen */
 			system("cls");
-			puts("Bitte gib hier deinen Verschluesselungstext ein:");
+			puts("Please type your text here:");
 			scanf("%s", &Verschluesselungstext);
 			
 			FILE * Verschluesselungstextfile;
-			strcpy(VerschluesselungFileName, *argv);
-			strcat(VerschluesselungFileName, "Verschluesselungstext");
-			strcat(VerschluesselungFileName, VERSCHL_ENDING);
+			strcpy(VerschluesselungFileName, argv[PFAD]);
+			strcat(VerschluesselungFileName, "Encryption_text");
 			Verschluesselungstextfile = fopen(VerschluesselungFileName,"wb");
 			fprintf(Verschluesselungstextfile, Verschluesselungstext);
 			fclose(Verschluesselungstextfile);
@@ -127,16 +127,20 @@ char *argv[];
 		else
 		{
 			/* Verschl File nicht erstellen */
-			strcpy(VerschluesselungFileName, *argv);
-			strcat(VerschluesselungFileName, Verschluesselung);
-			strcat(VerschluesselungFileName, VERSCHL_ENDING);
+			strcpy(VerschluesselungFileName, Verschluesselung);
 		}
 		
-		strcpy(LoadFileName, *argv);									//Originalfile Dateiname
-		strcat(LoadFileName, DECRYPTED_ENDING);		//zusammensetzen
+		/* Original file zusammensetzen */
+		strcpy(LoadFileName, argv[PFAD]);
+		strcat(LoadFileName, argv[DATEINAME]);
+		strcat(LoadFileName, argv[DATEIENDUNG]);
 		 	 
-		strcpy(SaveFileName, *argv);									//Ausgabefile Dateiname
-		strcat(VerschluesselungFileName, VERSCHL_ENDING);
+		 	 
+		/* Output file zusammensetzen */
+		strcpy(SaveFileName, argv[PFAD]);
+		strcat(SaveFileName, argv[DATEINAME]);
+		strcat(SaveFileName, ENCRYPTED_ADD);
+		strcat(SaveFileName, argv[DATEIENDUNG]);
 		 	 
 		encrypt(LoadFileName, SaveFileName, VerschluesselungFileName);
 			 
