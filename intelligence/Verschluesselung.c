@@ -74,8 +74,8 @@ typedef unsigned char byte;
 /* Verschluesseslung */
 int encrypt (char *LoadFName, char *SaveFName, char *VerschluesselungFName); 
 
-/* Entschluesselung */
-int decrypt (char *LoadFName, char *VerschluesselungFName);
+/* Verschluesselungs File Erstellung */
+int createVerschlFile (char *VerschluesselungFName, char Verschluesselung[1500]);
 
 /* PW - File */
 //int createVerschlFile (char *VerschluesselungFileName, char Verschluesselung[255]);  
@@ -320,3 +320,70 @@ int encrypt (char *LoadFName, char *SaveFName, char *VerschluesselungFName) {
   return (ErrorCode);  /* Rueckgabe des Fehlercodes */
 }   
 
+/*******************************************************************************
+********************************************************************************
+* Funktion:  Password File erstellen
+*
+* Source: 	  Verschluesselung_Satz.c
+*
+* Call:      createPasswordFile (char * LoadFName, char * SaveFName, char * PasswordFName);	   			   
+*									   									   
+* Autor:     Jonas Arnold			  						   
+*									   									   
+* Version:   1.0				   			   
+*									   									   
+* Datum: 	   07.04.16
+*
+* Entwicklungsablauf(Version, Datum, Autor, Entwicklungsschritt):
+* -  1.0   07.04.16   ARJO   ganze Funktion erstellt
+*									   									   
+********************************************************************************
+*
+* Verwendungszweck: 
+* 
+*
+* Beschreibung:
+* 
+* 
+* 
+* Precondition:
+* Fuer erfolgreichen Kopiervorgang gilt:  
+* - Originalfile ist vorhanden und befindet sich im entsprechenden Ordner
+* - Ausgabefile kann im entsprechenden Ordner erstellt werden (schreibrecht)
+*
+* Postcondition:
+* Wenn Originalfile nicht vorhanden oder nicht lesbar -> Fehlermeldung wird
+*  ausgegeben.
+* Wenn Ausgabefile nicht geschrieben werden kann -> Fehlermeldung wird
+*  ausgegeben.
+*
+* Ben�tigte Unterprogramme:
+* 
+*
+* Parameter: (I: Input, O: Output, U: Update)
+* -
+*
+* Copyright (c) 2016 by J.Arnold, CH-6410 Goldau
+********************************************************************************
+*******************************************************************************/ 
+int createVerschlFile (char *VerschluesselungFName, char Verschluesselung[1500])
+{
+
+  int  ErrorCode = NO_ERROR;   /* Error-Code-Variable */
+  FILE * VerschluesselungFile;               /* File welches geladen wird */
+
+  /* Kontrolliertes oeffnen der Files */
+  if ((VerschluesselungFile = fopen (VerschluesselungFName, "wb")) == NULL)
+    ErrorCode = ERROR_OPEN_VERSCHL_FILE;
+   
+  /* Alle Filezugriffe moeglich ? */
+  if (ErrorCode == NO_ERROR) {  
+     fputs (Verschluesselung, VerschluesselungFile);  
+  }
+
+  /* Wenn PW File geoffnet werden konnte */
+  if (ErrorCode != ERROR_OPEN_VERSCHL_FILE)  
+    fclose (VerschluesselungFile); 
+ 
+  return (ErrorCode);  /* Rueckgabe des Fehlercodes */
+}  
