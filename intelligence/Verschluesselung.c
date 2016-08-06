@@ -62,9 +62,9 @@
 #define SET_BIT(var,pos) ((var) |= (1 << pos))
 
 /* Parameteruebergabe Definition */
-#define DATEINAME 1
-#define PFAD 2
-#define DATEIENDUNG 3
+#define DATEINAME argv[1]
+#define PFAD argv[2]
+#define DATEIENDUNG argv[3]
 
 typedef unsigned char byte;
 
@@ -131,19 +131,19 @@ char *argv[];
 		}
 		
 		/* Original file zusammensetzen */
-		strcpy(LoadFileName, argv[PFAD]);
-		strcat(LoadFileName, argv[DATEINAME]);
-		strcat(LoadFileName, argv[DATEIENDUNG]);
+		strcpy(LoadFileName, PFAD);
+		strcat(LoadFileName, DATEINAME);
+		strcat(LoadFileName, DATEIENDUNG);
 		 	 
 		 	 
 		/* Output file zusammensetzen */
-		strcpy(SaveFileName, argv[PFAD]);
-		strcat(SaveFileName, argv[DATEINAME]);
+		strcpy(SaveFileName, PFAD);
+		strcat(SaveFileName, DATEINAME);
 		strcat(SaveFileName, ENCRYPTED_ADD);
-		strcat(SaveFileName, argv[DATEIENDUNG]);
+		strcat(SaveFileName, DATEIENDUNG);
 		 	 
 		printf("Encryption processing...");
-		encrypt(LoadFileName, SaveFileName, VerschluesselungFileName);
+		Error = encrypt(LoadFileName, SaveFileName, VerschluesselungFileName);
 			 
 		
 		system("cls");
