@@ -93,36 +93,38 @@ char *argv[];
   char LoadFileName [NAMENSGROESSE + 1];   		/* Variable fuer Originalfile */  
   char SaveFileName [NAMENSGROESSE + 1];   		/* Variable fuer Sicherungsfile */
   char VerschluesselungFileName [NAMENSGROESSE + 1]; /* Variable fuer Ver-File */
-  char Dateiname [NAMENSGROESSE + 1] = {0};  /* Variable fuer Dateinamen */
-  char Verschluesselung[NAMENSGROESSE + 1] = {0}; 							/* Variable fuer Verschluesselung */
+  char Dateiname [NAMENSGROESSE + 1] = "";  /* Variable fuer Dateinamen */
+  char Verschluesselung[NAMENSGROESSE + 1] = ""; 							/* Variable fuer Verschluesselung */
   char Verschluesselungstext[1500] = {0};    /* Variable fuer Verschluesselungstext */
   char Taste;
-    
-
+  
   
   /* Verschluesselung eines Bildes angefordert */
   puts("Encryption with Picture");
   puts("-----------------------\n");
 
 	 puts("Please drag and drop your TXT-file with the text into this command");
-	 puts("window. If you want to type some text you can just press ENTER.\n\n");
+	 puts("window. If you want to type some text you can just type in the");
+		puts("keyword 'type'. Then press ENTER.\n\n");
 		  
 		scanf("%s", &Verschluesselung);
  
-		if (Verschluesselung == "")
+		if (strcmp(Verschluesselung, "type") == 0 ||
+						strcmp(Verschluesselung, "TYPE") == 0 ||
+						strcmp(Verschluesselung, "Type") == 0)
 		{
 			/* Verschluesslungstext file erstellen */
 			system("cls");
-			puts("Please type your text here:");
-			scanf("%s", &Verschluesselungstext);
+			puts("Please type your text here: (ENTER key will start the Encryption!)");
 			
-			FILE * Verschluesselungstextfile;
-			strcpy(VerschluesselungFileName, argv[PFAD]);
+			fflush(stdin);	//Flush
+			fgets(Verschluesselungstext, 1500, stdin); //Text einlesen (max. 1500 Zeichen)
+			
+			/* Pfad fuer Verschluesselungstext file zusammensetzen */
+			strcpy(VerschluesselungFileName, PFAD);
 			strcat(VerschluesselungFileName, "Encryption_text");
-			Verschluesselungstextfile = fopen(VerschluesselungFileName,"wb");
-			fprintf(Verschluesselungstextfile, Verschluesselungstext);
-			fclose(Verschluesselungstextfile);
-			
+			strcat(VerschluesselungFileName, VERSCHL_ENDING);
+			Error = createVerschlFile(VerschluesselungFileName, Verschluesselungstext);
 		}
 		else
 		{
@@ -172,10 +174,6 @@ char *argv[];
       }
     }
  	}
-  
-
-  /* Loeschen des PW-Files */
- // remove (VerschluesselungFileName);
 
   return(0);
 }             
@@ -357,7 +355,7 @@ int encrypt (char *LoadFName, char *SaveFName, char *VerschluesselungFName) {
 * Wenn Ausgabefile nicht geschrieben werden kann -> Fehlermeldung wird
 *  ausgegeben.
 *
-* Benï¿½tigte Unterprogramme:
+* Benötigte Unterprogramme:
 * 
 *
 * Parameter: (I: Input, O: Output, U: Update)
