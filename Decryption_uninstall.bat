@@ -59,24 +59,25 @@ echo Removing Files
 rd /q /s "C:\Decryption\intelligence"
 rd /q /s "C:\Decryption\scripts"
 rd /q /s "C:\Decryption\thumbs"
-del /q "C:\Decryption\information.txt"
+del /q "C:\Decryption\README.md"
 echo Finished Removing Files
 
 echo.
 echo Removing RMB Tools
-SET KEYENTSCHL="HKCR\*\shell\DECRYPTION (Decrypt)"
-SET KEYVERSCHL="HKCR\*\shell\DECRYPTION (Encrypt)"
-reg delete %KEYENTSCHL% /f
-reg delete %KEYVERSCHL% /f
+SET KEY_DECR="HKCR\*\shell\DECRYPTION (Decrypt)"
+SET KEY_ENCR="HKCR\*\shell\DECRYPTION (Encrypt)"
+reg delete %KEY_DECR% /f
+reg delete %KEY_ENCR% /f
 echo Finished Removing RMB Tools
 
 echo.
-If Not Exist "C:\Decryption\intelligence\Entschluesselung.exe" goto Successful Else goto Not_Successful
+If Not Exist "C:\Decryption\intelligence\Decryption.exe" goto Successful Else goto Not_Successful
 :Successful
 echo Uninstallation was successful.
 echo.
 pause
 goto DEL_UNINSTALLFILE
+
 :Not_Successful
 echo Uninstallation was not successful. Please delete folder maually: "C:\Decryption"
 echo.

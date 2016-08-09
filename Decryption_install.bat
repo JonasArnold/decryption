@@ -60,32 +60,32 @@ echo Copying Files...
 REM Get current Path
 set INSTALLDIR=%~dp0
 echo Path: %INSTALLDIR%
-copy "%INSTALLDIR%\scripts\start_Entschluesselung.bat" "c:\Decryption\scripts\"
-copy "%INSTALLDIR%\intelligence\Entschluesselung.exe" "c:\Decryption\intelligence\"
-copy "%INSTALLDIR%\scripts\start_Verschluesselung.bat" "c:\Decryption\scripts\"
-copy "%INSTALLDIR%\intelligence\Verschluesselung.exe" "c:\Decryption\intelligence\"
+copy "%INSTALLDIR%\scripts\start_Decryption.bat" "c:\Decryption\scripts\"
+copy "%INSTALLDIR%\intelligence\Decryption.exe" "c:\Decryption\intelligence\"
+copy "%INSTALLDIR%\scripts\start_Encryption.bat" "c:\Decryption\scripts\"
+copy "%INSTALLDIR%\intelligence\Encryption.exe" "c:\Decryption\intelligence\"
 copy "%INSTALLDIR%\thumbs\key.ico" "c:\Decryption\thumbs"
 copy "%INSTALLDIR%\thumbs\lock.ico" "c:\Decryption\thumbs"
-copy "%INSTALLDIR%\information\information.txt" "c:\Decryption\"
 copy "%INSTALLDIR%\Decryption_uninstall.bat" "c:\Decryption\"
+copy "%INSTALLDIR%\README.md" "c:\Decryption\"
 echo Finished Copy Process!
 
 echo.
 echo Adding RMB Tools
-SET KEYENTSCHL=HKCR\*\shell\DECRYPTION (Decrypt)
-SET KEYVERSCHL=HKCR\*\shell\DECRYPTION (Encrypt)
+SET KEY_DECR=HKCR\*\shell\DECRYPTION (Decrypt)
+SET KEY_ENCR=HKCR\*\shell\DECRYPTION (Encrypt)
 
-SET PATHENTSCHL=C:\Decryption\scripts\start_Entschluesselung.bat
-SET PATHVERSCHL=C:\Decryption\scripts\start_Verschluesselung.bat
+SET PATH_DECR=C:\Decryption\scripts\start_Decryption.bat
+SET PATH_ENCR=C:\Decryption\scripts\start_Encryption.bat
 
-SET ICONENTSCHL=C:\Decryption\thumbs\key.ico
-SET ICONVERSCHL=C:\Decryption\thumbs\lock.ico
+SET ICON_DECR=C:\Decryption\thumbs\key.ico
+SET ICON_ENCR=C:\Decryption\thumbs\lock.ico
 
-REG ADD "%KEYENTSCHL%" /v "Icon" /t REG_EXPAND_SZ /d "%ICONENTSCHL%" /f
-REG ADD "%KEYENTSCHL%\command" /ve /d "%PATHENTSCHL% %%1" /f
+REG ADD "%KEY_DECR%" /v "Icon" /t REG_EXPAND_SZ /d "%ICON_DECR%" /f
+REG ADD "%KEY_DECR%\command" /ve /d "%PATH_DECR% %%1" /f
 
-REG ADD "%KEYVERSCHL%" /v "Icon" /t REG_EXPAND_SZ /d "%ICONVERSCHL%" /f
-REG ADD "%KEYVERSCHL%\command" /ve /d "%PATHVERSCHL% %%1" /f
+REG ADD "%KEY_ENCR%" /v "Icon" /t REG_EXPAND_SZ /d "%ICON_ENCR%" /f
+REG ADD "%KEY_ENCR%\command" /ve /d "%PATH_ENCR% %%1" /f
 echo Finished RMB Tools Add
 
 echo.
@@ -101,7 +101,7 @@ erase %temp%\msg.vbs
 exit
 
 :Not_Successful
-echo Installation was not successful. Please contact content owner! (see information.txt)
+echo Installation was not successful. Please contact content owner! Github: jonasarnold
 
 :END
 echo.
