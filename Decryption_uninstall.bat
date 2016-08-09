@@ -4,28 +4,32 @@ REM /////////////
 REM ADMIN ABFRAGE
 REM /////////////
 
-echo Request Admin Status
-
 :ADMIN_REQ
-fsutil > NUL
-if %errorlevel% == 1 (GOTO NO_ADMIN) else (GOTO ADMIN)
+REM  --> Check for permissions
+    IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
+>nul 2>&1 "%SYSTEMROOT%\SysWOW64\cacls.exe" "%SYSTEMROOT%\SysWOW64\config\system"
+) ELSE (
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+)
 
-:NO_ADMIN
-echo NO ADMIN ACCESS
-REM MSG * PLEASE RUN THIS SCRIPT AS AN ADMINISTATOR (Rightclick on it -- Run as Administator)
-set tempvbs=%temp%\%~n0.vbs
- 
-echo Dim oShell > "%tempvbs%"
-echo Set oShell = CreateObject("Shell.Application") >> "%tempvbs%"
-echo oShell.ShellExecute "%~f0", WScript.ScriptFullName, vbNullString, "runas" >> "%tempvbs%"
-echo Set oShell = CreateObject("Shell.Application") >> "%tempvbs%"
-cscript "%tempvbs%" //nologo
-del "%tempvbs%"
-goto ADMIN_REQUEST
+REM --> If error flag set, we do not have admin.
+if '%errorlevel%' NEQ '0' (
+    echo Requesting administrative privileges...
+    goto UACPrompt
+) else ( goto gotAdmin )
 
-:ADMIN
-echo ADMIN ACCESS
-goto START_SCRIPT
+:UACPrompt
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+    set params = %*:"=""
+    echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
+
+    "%temp%\getadmin.vbs"
+    del "%temp%\getadmin.vbs"
+    exit /B
+
+:gotAdmin
+    pushd "%CD%"
+    CD /D "%~dp0"
 
 REM //////////////////
 REM ENDE ADMIN ABFRAGE
