@@ -67,7 +67,14 @@ copy "%INSTALLDIR%\intelligence\Encryption.exe" "c:\Decryption\intelligence\"
 copy "%INSTALLDIR%\thumbs\key.ico" "c:\Decryption\thumbs"
 copy "%INSTALLDIR%\thumbs\lock.ico" "c:\Decryption\thumbs"
 copy "%INSTALLDIR%\Decryption_uninstall.bat" "c:\Decryption\"
+
+REM Renaming Readme-file
+if exist "%INSTALLDIR%\README.md" goto Rename_readme else goto No_readme
+:Rename_readme
 copy "%INSTALLDIR%\README.md" "c:\Decryption\"
+ren "c:\Decryption\README.md" "README.txt"
+:No_readme
+
 echo Finished Copy Process!
 
 echo.
