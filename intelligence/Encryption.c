@@ -77,6 +77,9 @@ int encrypt (char *LoadFName, char *SaveFName, char *VerschluesselungFName);
 /* Verschluesselungs File Erstellung */
 int createVerschlFile (char *VerschluesselungFName, char Verschluesselung[1500]);
 
+/* Function to read out the Config File */
+int readoutConfigFile (char ConfigFilePath[80], char SettingName[50], char *ValueOutput);
+
 /* PW - File */
 //int createVerschlFile (char *VerschluesselungFileName, char Verschluesselung[255]);  
 
@@ -88,16 +91,17 @@ main(argc, argv) /* Argumente an main-Funktion */
 int argc;
 char *argv[];
 {
-    
-  int Error = NO_ERROR;                   		 /* Errorcode der Filezugriffe */
-  char LoadFileName [NAMENSGROESSE + 1];   		/* Variable fuer Originalfile */  
-  char SaveFileName [NAMENSGROESSE + 1];   		/* Variable fuer Sicherungsfile */
-  char VerschluesselungFileName [NAMENSGROESSE + 1]; /* Variable fuer Ver-File */
-  char Dateiname [NAMENSGROESSE + 1] = "";  /* Variable fuer Dateinamen */
-  char Verschluesselung[NAMENSGROESSE + 1] = ""; 							/* Variable fuer Verschluesselung */
-  char Verschluesselungstext[1500] = {0};    /* Variable fuer Verschluesselungstext */
-  char Taste;
-  
+	int Error = NO_ERROR;                   		 /* Errorcode der Filezugriffe */
+	char LoadFileName [NAMENSGROESSE + 1];   		/* Variable fuer Originalfile */  
+	char SaveFileName [NAMENSGROESSE + 1];   		/* Variable fuer Sicherungsfile */
+	char VerschluesselungFileName [NAMENSGROESSE + 1]; /* Variable fuer Ver-File */
+	char Dateiname [NAMENSGROESSE + 1] = "";  /* Variable fuer Dateinamen */
+	char Verschluesselung[NAMENSGROESSE + 1] = ""; 							/* Variable fuer Verschluesselung */
+	char Verschluesselungstext[1500] = {0};    /* Variable fuer Verschluesselungstext */
+	char Taste;
+	byte File_creation = 0;
+	char ConfigFilePath[] = "C:/Decryption/config/config.txt"; 	// path to the config file
+	char SettingValue[20];										// value of the setting in config file
   
   /* Verschluesselung eines Bildes angefordert */
   puts("Encryption with Picture");
@@ -114,6 +118,7 @@ char *argv[];
 						strcmp(Verschluesselung, "Type") == 0)
 		{
 			/* Verschluesslungstext file erstellen */
+			File_creation = 1;
 			system("cls");
 			puts("Please type your text here: (ENTER key will start the Encryption!)");
 			
@@ -147,7 +152,16 @@ char *argv[];
 		printf("Encryption processing...");
 		Error = encrypt(LoadFileName, SaveFileName, VerschluesselungFileName);
 			 
-		
+	
+		/* read the File Deletion Setting from config.txt */
+		Error = readoutConfigFile(ConfigFilePath, "Enable_Encryption_Text_File_Deletion", SettingValue);
+
+		/* Encryption_text.TXT File deletion if enabled in config */
+		if ((strcmp(SettingValue, "true") == 0) && File_creation == 1)
+		{
+ 			remove(VerschluesselungFileName);
+		}
+
 		system("cls");
 		
 		/* Errors auswerten */
@@ -385,3 +399,106 @@ int createVerschlFile (char *VerschluesselungFName, char Verschluesselung[1500])
  
   return (ErrorCode);  /* Rueckgabe des Fehlercodes */
 }  
+
+
+
+/***************************************************************************************
+****************************************************************************************
+* Function:	readoutConfigFile
+*
+* Call:		ErrorVariable = readoutConfigFile(ConfigFilePath, SettingName, ValueOutput);	   			   
+*									   									   
+* Author:	Jonas Arnold			  						   
+*									   									   
+* Version:	1.0				   			   
+*									   									   
+* Date:		10.08.2016
+*									   									   
+****************************************************************************************
+*
+* Usage: 
+* Used to read out the value of a setting in a configuration file.
+* Originally developped for DECRYPTION (github.com/jonasarnold/decryption)
+*
+*
+* Description:
+* ConfigFilePath: a string, containing the file path of the config file
+* SettingName: a string containing the name of the setting
+* ValueOutput: a pointer pointing at a string to write in the value of the setting
+*
+*
+* Example definition and call:
+*   
+* 	char ConfigFilePath [80]; 			// path to the config file
+*	char SettingName [50];				// name of the setting in config file
+*	char SettingValue[20];				// value of the setting in config file
+*
+*	Error = readoutConfigFile(ConfigFilePath, SettingName, SettingValue);
+*
+* Note to the 'Error' Variable:
+* 'Error' is a int variable to detect errors while opening/closing a file.
+* Errors will be returned by the function. To use the error codes create the following
+* constants and give them a number (= ErrorCode):
+*   'NO_ERROR', 'ERROR_OPEN_LOAD_FILE', 'ERROR_OPEN_LOAD_FILE'
+*
+* Pre-condition:
+* Config-File available und accessible.
+* Settings liste in this style (without apostrophes):
+* 'SettingNameWithNoWhitespaces=ValueOfTheSetting'
+*
+*
+* Post-condition:
+* The value of the requested setting in the config file will be stored
+* in the given string parameter "ValueOutput".
+*
+* Copyright (c) 2016 by Jonas Arnold
+********************************************************************************
+*******************************************************************************/ 
+int readoutConfigFile (char ConfigFilePath[80], char SettingName[50], char *ValueOutput){
+
+ 	int  ErrorCode = NO_ERROR;   	/* Error-Code variable */
+ 	FILE * ConfigFile;              /* File Stream to config file */
+	int line_number = 1;			/* number of the line (file) */
+	char temp[512];					/* temporary array */
+	char delimiter[] = "=";			/* between value and name of the setting */
+	char FileValue[50];				/* value read from the file */
+	char *pointer_value;			/* points on the value of the setting */			
+	char OutputValue[50];			/* final value to return */
+
+  	/* controlled opening of the file */
+  	if ((ConfigFile = fopen (ConfigFilePath, "r")) == NULL)
+  	  ErrorCode = ERROR_OPEN_LOAD_FILE;
+   
+  	/* file access possible ? */
+  	if (ErrorCode == NO_ERROR)
+  	{  
+  		/* search the file for strings */
+  		while(fgets(temp, 512, ConfigFile) != NULL)
+		{
+			/* search the specific string */ 
+			if((strstr(temp, SettingName)) != NULL) {
+				strcpy(FileValue, temp);   //copy the text to the variable
+				}	
+			line_number++;  //increment the line number
+		}
+	}
+	
+	/* limiting the string to where the value ends */
+	FileValue[sizeof(FileValue)-1] = '\0';
+		
+	/* initialize delimination */
+	pointer_value = strtok(FileValue, delimiter);
+
+	/* get value */
+	pointer_value = strtok(NULL, delimiter);
+	
+	/* copy value to the return-pointer */
+	strcpy(ValueOutput, pointer_value);
+	
+	/* close file */
+	if (ErrorCode != ERROR_OPEN_LOAD_FILE)  
+    fclose (ConfigFile);
+  	
+  	
+	return(ErrorCode);
+}   

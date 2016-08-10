@@ -1,0 +1,6 @@
+# Config File Decryption
+
+## Enable_Encryption_Text_File_Deletion
+# If set to 'true' the Encryption_text.TXT file (created when typing text directly into the console) will be deleted after Encryption
+# If set to 'false' the file will not be deleted
+Enable_Encryption_Text_File_Deletion=true

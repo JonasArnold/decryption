@@ -53,6 +53,7 @@ mkdir "c:\Decryption"
 mkdir "c:\Decryption\scripts"
 mkdir "c:\Decryption\intelligence"
 mkdir "c:\Decryption\thumbs"
+mkdir "c:\Decryption\config"
 echo Finished Directory Creation!
 
 echo.
@@ -66,6 +67,7 @@ copy "%INSTALLDIR%\scripts\start_Encryption.bat" "c:\Decryption\scripts\"
 copy "%INSTALLDIR%\intelligence\Encryption.exe" "c:\Decryption\intelligence\"
 copy "%INSTALLDIR%\thumbs\key.ico" "c:\Decryption\thumbs"
 copy "%INSTALLDIR%\thumbs\lock.ico" "c:\Decryption\thumbs"
+copy "%INSTALLDIR%\config\config.txt" "c:\Decryption\config"
 copy "%INSTALLDIR%\Decryption_uninstall.bat" "c:\Decryption\"
 
 REM Renaming Readme-file
