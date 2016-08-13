@@ -104,7 +104,8 @@ echo Installation was successful.
 
 REM MSGBOX - SUCCESSFUL INSTALLATION
 echo msgbox"The Installation of DECRYPTION was successful!",vbInformation , "Installation successful"> %temp%\msg.vbs 
-%temp%\msg.vbs 
+echo.
+cscript %temp%\msg.vbs 
 erase %temp%\msg.vbs
 
 exit
