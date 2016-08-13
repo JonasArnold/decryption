@@ -64,6 +64,7 @@ echo Removing Files
 rd /q /s "%INSTALLDIR%\intelligence"
 rd /q /s "%INSTALLDIR%\scripts"
 rd /q /s "%INSTALLDIR%\thumbs"
+rd /q /s "%INSTALLDIR%\config"
 del /q "%INSTALLDIR%\README.txt"
 echo Finished Removing Files
 
