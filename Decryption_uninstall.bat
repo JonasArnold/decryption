@@ -55,16 +55,18 @@ exit
 
 :START_UNINSTALLATION
 
-REM Get current Path
+REM Get Paths
 set INSTALLDIR=%PROGRAMFILES%\Decryption
+set CONFIGPATH=%APPDATA%\Decryption
 echo Path to installed software: %INSTALLDIR%
+echo Path of the config file: %CONFIGPATH%
 
 echo.
 echo Removing Files
 rd /q /s "%INSTALLDIR%\intelligence"
 rd /q /s "%INSTALLDIR%\scripts"
 rd /q /s "%INSTALLDIR%\thumbs"
-rd /q /s "%INSTALLDIR%\config"
+rd /q /s "%CONFIGPATH%\config"
 del /q "%INSTALLDIR%\README.txt"
 echo Finished Removing Files
 

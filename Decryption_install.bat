@@ -47,11 +47,13 @@ echo ----------
 echo.
 echo Installation started...
 
-REM Get current Path
+REM Get Paths
 set CURRENTPATH=%~dp0
 set INSTALLDIR=%PROGRAMFILES%\Decryption
+set CONFIGPATH=%APPDATA%\Decryption
 echo Path of the Installer-Files: %CURRENTPATH%
 echo Path to install the software: %INSTALLDIR%
+echo Path of the config file: %CONFIGPATH%
 
 echo.
 echo Creating Directorys...
@@ -59,7 +61,7 @@ mkdir "%INSTALLDIR%"
 mkdir "%INSTALLDIR%\scripts"
 mkdir "%INSTALLDIR%\intelligence"
 mkdir "%INSTALLDIR%\thumbs"
-mkdir "%INSTALLDIR%\config"
+mkdir "%CONFIGPATH%\config"
 echo Finished Directory Creation!
 
 echo.
@@ -70,7 +72,7 @@ copy "%CURRENTPATH%\scripts\start_Encryption.bat" "%INSTALLDIR%\scripts\"
 copy "%CURRENTPATH%\intelligence\Encryption.exe" "%INSTALLDIR%\intelligence\"
 copy "%CURRENTPATH%\thumbs\key.ico" "%INSTALLDIR%\thumbs"
 copy "%CURRENTPATH%\thumbs\lock.ico" "%INSTALLDIR%\thumbs"
-copy "%CURRENTPATH%\config\config.txt" "%INSTALLDIR%\config"
+copy "%CURRENTPATH%\config\config.txt" "%CONFIGPATH%\config"
 copy "%CURRENTPATH%\Decryption_uninstall.bat" "%INSTALLDIR%"
 
 REM Looking for existing Readme file (rename can't be forced)

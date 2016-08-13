@@ -103,10 +103,10 @@ char *argv[];
 	char SettingValue[20];										// value of the setting in config file
   
   /* Getting config file path */
-  char* ProgramFilesPath;
+  char* AppDataPath;
   char ConfigFilePath[100];
-		ProgramFilesPath = getenv("PROGRAMFILES");
-		strcpy(ConfigFilePath, ProgramFilesPath);
+		AppDataPath = getenv("APPDATA");
+		strcpy(ConfigFilePath, AppDataPath);
 	 strcat(ConfigFilePath, "/Decryption/config/config.txt");
   
   /* Verschluesselung eines Bildes angefordert */
