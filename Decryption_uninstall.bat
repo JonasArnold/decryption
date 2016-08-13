@@ -54,12 +54,17 @@ IF /I "%ANSWER%" == "yes" goto START_UNINSTALLATION
 exit
 
 :START_UNINSTALLATION
+
+REM Get current Path
+set INSTALLDIR=%PROGRAMFILES%\Decryption
+echo Path to installed software: %INSTALLDIR%
+
 echo.
 echo Removing Files
-rd /q /s "C:\Decryption\intelligence"
-rd /q /s "C:\Decryption\scripts"
-rd /q /s "C:\Decryption\thumbs"
-del /q "C:\Decryption\README.md"
+rd /q /s "%INSTALLDIR%\intelligence"
+rd /q /s "%INSTALLDIR%\scripts"
+rd /q /s "%INSTALLDIR%\thumbs"
+del /q "%INSTALLDIR%\README.txt"
 echo Finished Removing Files
 
 echo.
@@ -71,7 +76,7 @@ reg delete %KEY_ENCR% /f
 echo Finished Removing RMB Tools
 
 echo.
-If Not Exist "C:\Decryption\intelligence\Decryption.exe" goto Successful Else goto Not_Successful
+If Not Exist "%INSTALLDIR%\intelligence\Decryption.exe" goto Successful Else goto Not_Successful
 :Successful
 echo Uninstallation was successful.
 echo.
@@ -85,7 +90,7 @@ pause
 
 
 :DEL_UNINSTALLFILE
-rd /q /s "C:\Decryption"
+rd /s /q "%INSTALLDIR%"
 
 :END
 exit

@@ -47,35 +47,42 @@ echo ----------
 echo.
 echo Installation started...
 
+REM Get current Path
+set CURRENTPATH=%~dp0
+set INSTALLDIR=%PROGRAMFILES%\Decryption
+echo Path of the Installer-Files: %CURRENTPATH%
+echo Path to install the software: %INSTALLDIR%
+
 echo.
 echo Creating Directorys...
-mkdir "c:\Decryption"
-mkdir "c:\Decryption\scripts"
-mkdir "c:\Decryption\intelligence"
-mkdir "c:\Decryption\thumbs"
-mkdir "c:\Decryption\config"
+mkdir "%INSTALLDIR%"
+mkdir "%INSTALLDIR%\scripts"
+mkdir "%INSTALLDIR%\intelligence"
+mkdir "%INSTALLDIR%\thumbs"
+mkdir "%INSTALLDIR%\config"
 echo Finished Directory Creation!
 
 echo.
 echo Copying Files...
-REM Get current Path
-set INSTALLDIR=%~dp0
-echo Path: %INSTALLDIR%
-copy "%INSTALLDIR%\scripts\start_Decryption.bat" "c:\Decryption\scripts\"
-copy "%INSTALLDIR%\intelligence\Decryption.exe" "c:\Decryption\intelligence\"
-copy "%INSTALLDIR%\scripts\start_Encryption.bat" "c:\Decryption\scripts\"
-copy "%INSTALLDIR%\intelligence\Encryption.exe" "c:\Decryption\intelligence\"
-copy "%INSTALLDIR%\thumbs\key.ico" "c:\Decryption\thumbs"
-copy "%INSTALLDIR%\thumbs\lock.ico" "c:\Decryption\thumbs"
-copy "%INSTALLDIR%\config\config.txt" "c:\Decryption\config"
-copy "%INSTALLDIR%\Decryption_uninstall.bat" "c:\Decryption\"
+copy "%CURRENTPATH%\scripts\start_Decryption.bat" "%INSTALLDIR%\scripts\"
+copy "%CURRENTPATH%\intelligence\Decryption.exe" "%INSTALLDIR%\intelligence\"
+copy "%CURRENTPATH%\scripts\start_Encryption.bat" "%INSTALLDIR%\scripts\"
+copy "%CURRENTPATH%\intelligence\Encryption.exe" "%INSTALLDIR%\intelligence\"
+copy "%CURRENTPATH%\thumbs\key.ico" "%INSTALLDIR%\thumbs"
+copy "%CURRENTPATH%\thumbs\lock.ico" "%INSTALLDIR%\thumbs"
+copy "%CURRENTPATH%\config\config.txt" "%INSTALLDIR%\config"
+copy "%CURRENTPATH%\Decryption_uninstall.bat" "%INSTALLDIR%"
 
+REM Looking for existing Readme file (rename can't be forced)
+if exist "%INSTALLDIR%\README.txt" goto Delete_old_Readme else goto No_old_readme
+
+:Delete_old_Readme
+erase %INSTALLDIR%\README.txt
+:No_old_readme
 REM Renaming Readme-file
-if exist "%INSTALLDIR%\README.md" goto Rename_readme else goto No_readme
-:Rename_readme
-copy "%INSTALLDIR%\README.md" "c:\Decryption\"
-ren "c:\Decryption\README.md" "README.txt"
-:No_readme
+copy "%CURRENTPATH%\README.md" "%INSTALLDIR%"
+ren "%INSTALLDIR%\README.md" "README.txt"
+
 
 echo Finished Copy Process!
 
@@ -98,7 +105,7 @@ REG ADD "%KEY_ENCR%\command" /ve /d "%PATH_ENCR% %%1" /f
 echo Finished RMB Tools Add
 
 echo.
-If Exist "C:\Decryption" goto Successful Else goto Not_Successful
+If Exist %INSTALLDIR% goto Successful Else goto Not_Successful
 :Successful
 echo Installation was successful.
 
