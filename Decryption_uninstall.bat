@@ -93,7 +93,11 @@ pause
 
 
 :DEL_UNINSTALLFILE
-rd /s /q "%INSTALLDIR%"
+rd /s /q %CONFIGPATH%
+rd /s /q %INSTALLDIR%
+
+REM BATCH DELETING ITSELF
+(goto) 2>nul & del "%~f0"
 
 :END
 exit
