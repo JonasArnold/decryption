@@ -91,11 +91,11 @@ echo Adding RMB Tools
 SET KEY_DECR=HKCR\*\shell\DECRYPTION (Decrypt)
 SET KEY_ENCR=HKCR\*\shell\DECRYPTION (Encrypt)
 
-SET PATH_DECR=C:\Decryption\scripts\start_Decryption.bat
-SET PATH_ENCR=C:\Decryption\scripts\start_Encryption.bat
+SET PATH_DECR=%INSTALLDIR%\scripts\start_Decryption.bat
+SET PATH_ENCR=%INSTALLDIR%\scripts\start_Encryption.bat
 
-SET ICON_DECR=C:\Decryption\thumbs\key.ico
-SET ICON_ENCR=C:\Decryption\thumbs\lock.ico
+SET ICON_DECR=%INSTALLDIR%\thumbs\key.ico
+SET ICON_ENCR=%INSTALLDIR%\thumbs\lock.ico
 
 REG ADD "%KEY_DECR%" /v "Icon" /t REG_EXPAND_SZ /d "%ICON_DECR%" /f
 REG ADD "%KEY_DECR%\command" /ve /d "%PATH_DECR% %%1" /f

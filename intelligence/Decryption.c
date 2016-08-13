@@ -97,6 +97,7 @@ char *argv[];
             printf("Dateipfad: %s\n", *argv);
     
   /* Intro */ 
+  system("cls");
   puts("Verschluesselung mit Bild");
   puts("-------------------------\n");  
   

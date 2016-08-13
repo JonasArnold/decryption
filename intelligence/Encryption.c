@@ -100,10 +100,17 @@ char *argv[];
 	char Verschluesselungstext[1500] = {0};    /* Variable fuer Verschluesselungstext */
 	char Taste;
 	byte File_creation = 0;
-	char ConfigFilePath[] = "C:/Decryption/config/config.txt"; 	// path to the config file
 	char SettingValue[20];										// value of the setting in config file
   
+  /* Getting config file path */
+  char* ProgramFilesPath;
+  char ConfigFilePath[100];
+		ProgramFilesPath = getenv("PROGRAMFILES");
+		strcpy(ConfigFilePath, ProgramFilesPath);
+	 strcat(ConfigFilePath, "/Decryption/config/config.txt");
+  
   /* Verschluesselung eines Bildes angefordert */
+  system("cls");
   puts("Encryption with Picture");
   puts("-----------------------\n");
 

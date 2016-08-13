@@ -1,5 +1,7 @@
-REM Detecting the Parameters
+REM Setting Installation Directory
+set INSTALLDIR=%PROGRAMFILES%\Decryption
 
+REM Detecting the Parameters
 SET file_name=%~n1
 SET path=%~dp1
 SET file_extension=%~x1
@@ -12,7 +14,7 @@ if %file_extension% == .TXT (goto GOOD_FILETYPE)
 if %file_extension% == .txt (goto GOOD_FILETYPE) Else goto BAD_FILETYPE
 
 :GOOD_FILETYPE
-start C:\Decryption\intelligence\Encryption.exe %file_name% %path% %file_extension%
+"%INSTALLDIR%\intelligence\Encryption.exe" %file_name% %path% %file_extension%
 goto END
 
 :BAD_FILETYPE

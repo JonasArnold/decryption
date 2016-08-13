@@ -1,3 +1,6 @@
+REM Setting Installation Directory
+set INSTALLDIR=%PROGRAMFILES%\Decryption
+
 REM Detecting the Parameters
 SET file_name=%~n1
 SET path=%1
@@ -12,7 +15,7 @@ MSG * The file-type "%file_extension%" does not work with DECRYPTION. To decrypt
 goto END
 
 :GOOD_FILETYPE
-start /min C:\Decryption\intelligence\Decryption.exe %file_name% %path%
+"%INSTALLDIR%\intelligence\Decryption.exe" %file_name% %path%
 goto END
 
 :END
