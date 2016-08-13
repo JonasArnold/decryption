@@ -23,7 +23,7 @@ if '%errorlevel%' NEQ '0' (
     set params = %*:"=""
     echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
 	
-	cscript %temp%\getadmin.vbs
+    "C:\Windows\system32\cscript.exe" "%temp%\getadmin.vbs"
     del "%temp%\getadmin.vbs"
     exit /B
 
