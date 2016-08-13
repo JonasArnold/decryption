@@ -18,7 +18,8 @@ if %file_extension% == .txt (goto GOOD_FILETYPE) Else goto BAD_FILETYPE
 goto END
 
 :BAD_FILETYPE
-MSG * The file-type "%file_extension%" does not work with DECRYPTION. To encrypt you need to use a ".BMP" or ".TXT" file!
+echo msgbox"The file-type %file_extension% does not work with DECRYPTION. To encrypt you need to use a .BMP or .TXT-file!",vbCritical , "Incorrect file type"> %temp%\msg.vbs 
+start /B "C:\Windows\system32\cscript.exe" %temp%\msg.vbs 
 goto END
 
 :END

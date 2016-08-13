@@ -22,8 +22,8 @@ if '%errorlevel%' NEQ '0' (
     echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
     set params = %*:"=""
     echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params%", "", "runas", 1 >> "%temp%\getadmin.vbs"
-
-    "%temp%\getadmin.vbs"
+	
+	cscript %temp%\getadmin.vbs
     del "%temp%\getadmin.vbs"
     exit /B
 
@@ -84,7 +84,7 @@ erase %INSTALLDIR%\README.txt
 REM Renaming Readme-file
 copy "%CURRENTPATH%\README.md" "%INSTALLDIR%"
 ren "%INSTALLDIR%\README.md" "README.txt"
-
+erase "%INSTALLDIR%\README.md"
 
 echo Finished Copy Process!
 
@@ -114,7 +114,7 @@ echo Installation was successful.
 REM MSGBOX - SUCCESSFUL INSTALLATION
 echo msgbox"The Installation of DECRYPTION was successful!",vbInformation , "Installation successful"> %temp%\msg.vbs 
 echo.
-cscript %temp%\msg.vbs 
+cscript %temp%\msg.vbs  
 erase %temp%\msg.vbs
 
 exit
