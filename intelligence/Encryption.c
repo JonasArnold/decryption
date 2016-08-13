@@ -39,6 +39,7 @@
 #include <stdlib.h> /* Funktionsbibliothek: Hilfsfunktionen */
 #include <stdio.h>  /* Funktionsbibliothek: Standard Ein- Ausgabe */
 #include <string.h> /* Funktionen zur Stringbearbeitung */
+#include <unistd.h> /* Library for filesystems */
 
 /*******************************************************************************
 *  Globale Deklarationen und Definitionen
@@ -110,6 +111,7 @@ char *argv[];
 	 strcat(ConfigFilePath, "/Decryption/config/config.txt");
   
   /* Verschluesselung eines Bildes angefordert */
+  startpoint:    //to jump back to the start
   system("cls");
   puts("Encryption with Picture");
   puts("-----------------------\n");
@@ -119,7 +121,7 @@ char *argv[];
 		puts("keyword 'type'. Then press ENTER.\n\n");
 		  
 		scanf("%s", &Verschluesselung);
- 
+		
 		if (strcmp(Verschluesselung, "type") == 0 ||
 						strcmp(Verschluesselung, "TYPE") == 0 ||
 						strcmp(Verschluesselung, "Type") == 0)
@@ -140,8 +142,17 @@ char *argv[];
 		}
 		else
 		{
-			/* Verschl File nicht erstellen */
-			strcpy(VerschluesselungFileName, Verschluesselung);
+				/* Checking if file exists */
+				if( access( Verschluesselung, F_OK ) != -1 ) {
+    		// file exists
+			   strcpy(VerschluesselungFileName, Verschluesselung);
+				} else {
+    		// file doesn't exist
+      printf("\n\nFile does not exist - please try again\n\n");
+      system("pause");
+      goto startpoint; //jumping back to the start
+				}
+
 		}
 		
 		/* Original file zusammensetzen */
